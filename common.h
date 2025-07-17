@@ -23,3 +23,61 @@ typedef int8 Identifier;
 )
 
 #define showtype(e) printf("%s :: (%s)\n", #e, dtype((e)))
+
+typedef enum TokenType {
+    TOKEN_EOF,          // End of input
+    TOKEN_IDENTIFIER,   // Variable names, function names
+    TOKEN_NUMBER,       // Integer literals
+    TOKEN_STRING,       // String literals "..."
+    TOKEN_KEYWORD,      // let, if, else, while, etc.
+    
+    // Operators
+    TOKEN_PLUS,         // +
+    TOKEN_MINUS,        // -
+    TOKEN_MULTIPLY,     // *
+    TOKEN_DIVIDE,       // /
+    TOKEN_ASSIGN,       // =
+    TOKEN_EQUAL,        // ==
+    TOKEN_NOT_EQUAL,    // !=
+    TOKEN_LESS,         // <
+    TOKEN_GREATER,      // >
+    TOKEN_LESS_EQUAL,   // <=
+    TOKEN_GREATER_EQUAL,// >=
+    
+    // Delimiters
+    TOKEN_LPAREN,       // (
+    TOKEN_RPAREN,       // )
+    TOKEN_LBRACE,       // {
+    TOKEN_RBRACE,       // }
+    TOKEN_SEMICOLON,    // ;
+    TOKEN_COMMA,        // ,
+    
+    TOKEN_ERROR         // Error token
+} TokenType;
+
+typedef struct Token {
+    TokenType type;
+    int8* value;        // The actual text
+    int16 length;       // Length of the token
+    int16 line;         // Line number (for error reporting)
+    int16 column;       // Column number
+} Token;
+
+// Lexer state
+typedef struct Lexer {
+    int8* input;        // The input string
+    int8* current;      // Current position in input
+    int16 line;         // Current line number
+    int16 column;       // Current column number
+} Lexer;
+
+typedef struct Keyword {
+    int8* word;
+    int16 length;
+} Keyword;
+
+void init_lexer(Lexer* lexer, int8* input);
+Token next_token(Lexer* lexer);
+void free_token(Token* token);
+bool is_keyword(int8* text, int16 length);
+void print_token(Token* token);

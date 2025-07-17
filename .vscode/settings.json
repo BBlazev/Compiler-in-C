@@ -3,6 +3,7 @@
         "*.rh": "cpp",
         "type_traits": "cpp",
         "intepreter.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "stdlib.h": "c"
     }
 }
