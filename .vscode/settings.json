@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.rh": "cpp",
+        "type_traits": "cpp",
+        "intepreter.h": "c",
+        "stdio.h": "c"
+    }
+}

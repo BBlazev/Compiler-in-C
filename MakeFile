@@ -1,0 +1,17 @@
+flags=-02 -Wall -std=c17
+ldflags=-lbu
+
+.PHONY: all clean
+
+all: clean intepreter
+
+common.o: common.c common.h
+	cc $(flags) -c $<
+intepreter: intepreter.o common.o
+	cc $(flags) $^ -o $@ $(ldflags)
+
+intepreter.o: intepreter.c intepreter.h
+	cc $(flags) -c $<
+
+clean:
+	rm -f *.0 intepreter
