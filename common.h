@@ -23,6 +23,31 @@ typedef int8 Identifier;
 )
 
 #define showtype(e) printf("%s :: (%s)\n", #e, dtype((e)))
+typedef struct AST AST;
+typedef struct AST {
+  enum {
+    AST_NUMBER,
+    AST_VARIABLE,
+    AST_ASSIGNMENT,
+    AST_ADD,
+    AST_MUL,
+    AST_SUB,
+    AST_DIV
+  } tag;
+  union {
+    struct AST_NUMBER {int32 number; } AST_NUMBER;
+    struct AST_ADD {AST *left; AST *right; } AST_ADD;
+    struct AST_MUL {AST *left; AST *right; } AST_MUL;
+    struct AST_SUB {AST *left; AST *right;} AST_SUB;
+    struct AST_DIV {AST *left; AST *right;} AST_DIV;
+    struct AST_VARIABLE {Identifier* name;} AST_VARIABLE;
+    struct AST_ASSIGNMENT {Identifier* variable_name; AST *expression;} AST_ASSIGNMENT;
+  } data;
+} AST;
+
+
+
+
 
 typedef enum TokenType {
     TOKEN_EOF,          // End of input
@@ -75,6 +100,18 @@ typedef struct Keyword {
     int8* word;
     int16 length;
 } Keyword;
+
+
+
+
+
+
+AST* create_number_node(int32 num);
+AST* create_variable_node(Identifier* s);
+AST* create_binary_operation(AST* left, int operator_type, AST* right);
+AST* create_assignment_node(Identifier* variable_name, AST* expression);
+void cleanup_AST(AST* p);
+
 
 void init_lexer(Lexer* lexer, int8* input);
 Token next_token(Lexer* lexer);

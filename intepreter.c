@@ -41,7 +41,9 @@ void copy(int8* dst, int8* src, int16 size){
     for(dptr = dst, sptr = src, n = size; n; n--, dptr++, sptr++){
         *dptr = *sptr;
     }
+    
     *dptr = 0;
+
     return;
 }
 
@@ -337,14 +339,14 @@ void print_token(Token* token) {
 }
 void prompt(){
 
-    printf("@> ");
+    printf("\n@> ");
     fflush(stdout);
 
     return;
 
 }
 
-void mainloop(bool *cptr){
+void mainloop(bool *run_ptr){
     int8* cmd;
     Lexer lexer;
     Token token;
@@ -353,7 +355,7 @@ void mainloop(bool *cptr){
     cmd = readline();
     if(cmd){
         if(!strcmp($c cmd, "exit")) {
-            *cptr = false;
+            *run_ptr = false;
         } else {
             printf("Tokenizing: '%s'\n", $c cmd);
             init_lexer(&lexer, cmd);
@@ -364,11 +366,11 @@ void mainloop(bool *cptr){
                 
                 if(token.type == TOKEN_KEYWORD && 
                    !strcmp($c token.value, "exit")) {
-                    *cptr = false;
+                    *run_ptr = false;
                 }
                 
                 free_token(&token);
-            } while(token.type != TOKEN_EOF && *cptr);
+            } while(token.type != TOKEN_EOF && *run_ptr);
         }
         
         free(cmd);
@@ -377,20 +379,14 @@ void mainloop(bool *cptr){
 }
 
 int main(int argc, char* argv[]){
-    int8* cmd;
-    bool go;
+    bool run;
+    bool *run_ptr;
 
-    bool *cptr;
+    run = true;
+    run_ptr = &run;
 
-
-    go = true;
-    cptr = &go;
-
-    while(go){
-
-        mainloop(cptr);
-
-
+    while(run){
+        mainloop(run_ptr);
     }
  
     return 0;    
