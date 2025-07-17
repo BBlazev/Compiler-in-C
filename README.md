@@ -67,9 +67,9 @@ The interpreter starts with a simple prompt (`@> `) where you can:
 
 ### Core Language Features
 - [ ] **Lexical Analysis**
-  - [ ] Implement tokenizer for keywords, operators, literals
+  - [✅] Implement tokenizer for keywords, operators, literals
   - [ ] Add support for comments (single-line `//` and multi-line `/* */`)
-  - [ ] Handle whitespace and newlines properly
+  - [✅] Handle whitespace and newlines properly
 
 - [ ] **Parser Implementation**
   - [ ] Build recursive descent parser
