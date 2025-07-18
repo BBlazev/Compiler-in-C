@@ -85,7 +85,6 @@ The interpreter starts with a simple prompt (`@> `) where you can:
 
 ### Variable System Enhancements
 - [ ] **Symbol Table**
-  - [ ] Implement hash table for variable storage
   - [ ] Variable lookup and resolution
 
 - [ ] **Type System**
@@ -96,12 +95,9 @@ The interpreter starts with a simple prompt (`@> `) where you can:
 ### Control Flow
 - [ ] **Conditional Statements**
   - [ ] `if`/`else` statements
-  - [ ] `switch`/`case` statements
 
 - [ ] **Loops**
   - [ ] `while` loops
-  - [ ] `for` loops  
-  - [ ] `do-while` loops
   - [ ] `break` and `continue` statements
 
 ### Functions and Procedures
@@ -126,10 +122,6 @@ The interpreter starts with a simple prompt (`@> `) where you can:
   - [ ] Step-through debugger
   - [ ] Variable inspection
   - [ ] Breakpoints
-
-- [ ] **Testing Framework**
-  - [ ] Unit tests for core components
-  - [ ] Performance benchmarks
 
 - [ ] **Documentation**
   - [ ] Language specification
