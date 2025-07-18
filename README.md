@@ -86,11 +86,9 @@ The interpreter starts with a simple prompt (`@> `) where you can:
 ### Variable System Enhancements
 - [ ] **Symbol Table**
   - [ ] Implement hash table for variable storage
-  - [ ] Add scope management (global, local, block scope)
   - [ ] Variable lookup and resolution
 
 - [ ] **Type System**
-  - [ ] Add floating-point numbers (`float`, `double`)
   - [ ] Boolean type with `true`/`false` literals
   - [ ] Arrays/lists with indexing
   - [ ] Type checking and conversion
@@ -99,7 +97,6 @@ The interpreter starts with a simple prompt (`@> `) where you can:
 - [ ] **Conditional Statements**
   - [ ] `if`/`else` statements
   - [ ] `switch`/`case` statements
-  - [ ] Ternary operator (`?:`)
 
 - [ ] **Loops**
   - [ ] `while` loops
@@ -121,16 +118,8 @@ The interpreter starts with a simple prompt (`@> `) where you can:
   - [ ] Runtime error recovery
   - [ ] Stack trace on errors
 
-- [ ] **Memory Management**
-  - [ ] Garbage collector implementation
-  - [ ] Memory leak detection
-  - [ ] Reference counting for complex types
-
 - [ ] **Standard Library**
-  - [ ] String manipulation functions
-  - [ ] Math functions (`sqrt`, `pow`, `sin`, etc.)
   - [ ] File I/O operations
-  - [ ] Array/list manipulation
 
 ### Developer Experience
 - [ ] **Debugging Support**
@@ -140,7 +129,6 @@ The interpreter starts with a simple prompt (`@> `) where you can:
 
 - [ ] **Testing Framework**
   - [ ] Unit tests for core components
-  - [ ] Integration tests for language features
   - [ ] Performance benchmarks
 
 - [ ] **Documentation**
@@ -151,9 +139,7 @@ The interpreter starts with a simple prompt (`@> `) where you can:
 ### REPL Improvements
 - [ ] **Enhanced Interface**
   - [ ] Command history (up/down arrows)
-  - [ ] Tab completion for variables/functions
   - [ ] Syntax highlighting
-  - [ ] Multi-line input support
 
 - [ ] **REPL Commands**
   - [ ] `:help` - Show available commands
