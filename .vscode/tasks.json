@@ -7,9 +7,10 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                "intepreter.c",
+                "common.c",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "intepreter.exe"
             ],
             "options": {
                 "cwd": "${fileDirname}"

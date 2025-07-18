@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 typedef unsigned char int8;
 typedef unsigned short int int16;
@@ -23,7 +24,10 @@ typedef int8 Identifier;
 )
 
 #define showtype(e) printf("%s :: (%s)\n", #e, dtype((e)))
+
+
 typedef struct AST AST;
+
 typedef struct AST {
   enum {
     AST_NUMBER,
@@ -104,6 +108,10 @@ typedef struct Keyword {
 
 
 
+void copy(int8*, int8*, int16);
+void zero(int8*, int16);
+int8* readline(void);
+int16 length(int8*);
 
 
 AST* create_number_node(int32 num);
@@ -115,6 +123,7 @@ void cleanup_AST(AST* p);
 
 void init_lexer(Lexer* lexer, int8* input);
 Token next_token(Lexer* lexer);
+Token make_token(TokenType type, int8* start, int16 length, int16 line, int16 column);
 void free_token(Token* token);
 bool is_keyword(int8* text, int16 length);
 void print_token(Token* token);

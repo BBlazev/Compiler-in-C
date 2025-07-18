@@ -4,6 +4,9 @@
 #include <stdbool.h>
 #include <errno.h>
 #include "common.h"
+
+
+
 typedef unsigned char int8;
 typedef unsigned short int int16;
 typedef unsigned int int32;
@@ -23,20 +26,12 @@ typedef struct Variable{
     void* value;
 } Variable;
 
-#define $1 (int8 *)
-#define $2 (int16)
-#define $4 (int32)
-#define $8 (int64)
-#define $c (char*)
-#define $i (int)
+
 
 void mainloop(bool*);
 void prompt();
-int8* readline(void);
+
 Variable* make_Variable(Type, Identifier*, void*);
-int16 length(int8*);
-void copy(int8*, int8*, int16);
-void zero(int8*, int16);
 
 
 #define newstr(p,n,v) do{\
@@ -78,3 +73,10 @@ void zero(int8*, int16);
 
 #define newint(p,n,v) newvar(int32, (p), (n), (v))
 #define newchar(p,n,v) newvar(char,(p),(n),(v))
+
+#define $1 (int8 *)
+#define $2 (int16)
+#define $4 (int32)
+#define $8 (int64)
+#define $c (char*)
+#define $i (int)
