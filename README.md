@@ -1,29 +1,42 @@
 # C Interpreter Project
+![Intepreter](https://github.com/user-attachments/assets/13b6113b-a7e7-4afa-82b8-a2873656aff1)
 
-A lightweight interpreter implementation written in C, featuring a custom type system and dynamic variable management.
+A lightweight interpreter implementation written in C, featuring a complete parsing pipeline and dynamic variable management.
 
 ## Overview
 
-This project implements the foundation of a programming language interpreter with:
-- Custom type definitions and casting macros
-- Dynamic variable creation and management  
-- Memory-safe string and numeric operations
-- Interactive REPL (Read-Eval-Print Loop)
-- Extensible architecture for language features
+This project implements a working programming language interpreter with:
+- **Complete Lexer/Tokenizer** - Breaks source code into tokens (identifiers, operators, numbers, etc.)
+- **Recursive Descent Parser** - Parses tokens into Abstract Syntax Trees (AST)
+- **Symbol Table** - Dynamic variable storage with lookup and type safety
+- **AST Evaluator** - Executes parsed code and manages program state
+- **Interactive REPL** - Read-Eval-Print Loop with error handling
+- **Memory Management** - Safe allocation/deallocation with custom utilities
 
 ## Features
 
-### Current Implementation
-- **Variable Management**: Dynamic creation of variables with type safety
-- **Memory Management**: Custom `zero()`, `copy()`, and `length()` functions for safe memory operations
-- **Interactive Shell**: Basic REPL with command input and exit functionality
-- **Type Detection**: Generic macro for runtime type identification
+### Current Implementation ✅
+- **Variable Assignment**: Create variables with `x = 5` syntax
+- **Variable Lookup**: Reference stored variables by name (`x`)
+- **Symbol Table**: Array-based variable storage with collision detection
+- **AST Generation**: Parse input into tree structures representing code
+- **Type System**: Support for 32-bit integers with extensible type enum
+- **Error Handling**: Graceful parsing error detection and reporting
+- **Memory Safety**: Proper malloc/free patterns with cleanup functions
 
-### Variable Types Supported
-- `String`: Dynamic string storage with automatic memory management
-- `Int`: 32-bit integer values  
-- `Char`: Single character values
-- Extensible enum for additional types
+### Supported Operations
+```bash
+@> x = 5          # Create variable x with value 5
+Assignment completed!
+
+@> x              # Look up variable x  
+Variable x = 5
+
+@> y              # Try to access undefined variable
+Variable not found
+
+@> exit           # Quit interpreter
+```
 
 ## Building
 
@@ -33,8 +46,8 @@ make
 
 # Or manually compile
 gcc -O2 -Wall -std=c17 -c common.c
-gcc -O2 -Wall -std=c17 -c intepreter.c  
-gcc -O2 -Wall -std=c17 common.o intepreter.o -o intepreter
+gcc -O2 -Wall -std=c17 -c intepreter.c parser.c
+gcc -O2 -Wall -std=c17 common.o intepreter.o parser.o -o intepreter
 ```
 
 ## Usage
@@ -43,38 +56,48 @@ gcc -O2 -Wall -std=c17 common.o intepreter.o -o intepreter
 ./intepreter
 ```
 
-The interpreter starts with a simple prompt (`@> `) where you can:
-- Type `exit` to quit
-- Enter other commands (currently just echoes back)
+The interpreter starts with a prompt (`@> `) where you can:
+- **Assign variables**: `variableName = number`
+- **Look up variables**: `variableName`  
+- **Exit**: Type `exit`
 
 ## Code Structure
 
 ```
-├── common.h/c          # Core types, macros, and utilities
-├── intepreter.h/c      # Main interpreter logic and Variable system
+├── common.h/c          # Lexer, AST definitions, utility functions
+├── intepreter.h/c      # Variable system, symbol table, main loop
+├── parser.h/c          # Recursive descent parser and evaluator
 ├── MakeFile           # Build configuration
-└── README.md          # This file
+└── README.md        
 ```
 
-### Key Components
+### Architecture
 
-- **Variable Structure**: Stores type, identifier, and value pointer
-- **Creation Macros**: `newstr()`, `newint()`, `newchar()` for type-safe variable creation
-- **Memory Utilities**: Safe string operations and memory management
-- **REPL Loop**: Interactive command processing
+**Interpreter Pipeline:**
+```
+Source Code → Lexer → Parser → AST → Evaluator → Result
+     "x=5"  →  [TOK] →  [AST] → [AST] →   x=5    → "Assignment completed!"
+```
 
-## TODO List - at least some of it, hopefully
+**Key Components:**
+- **Lexer**: Tokenizes input using finite state machine
+- **Parser**: Builds AST using recursive descent with proper error handling  
+- **Symbol Table**: Manages variable lifetime and lookup (O(n) array-based)
+- **Evaluator**: Executes AST nodes and updates program state
+- **AST Nodes**: Support assignment, variable reference, and number literals
+
+## TODO List
 
 ### Core Language Features
-- [ ] **Lexical Analysis**
+- [✅] **Lexical Analysis**
   - [✅] Implement tokenizer for keywords, operators, literals
   - [ ] Add support for comments (single-line `//` and multi-line `/* */`)
   - [✅] Handle whitespace and newlines properly
 
-- [ ] **Parser Implementation**
-  - [ ] Build recursive descent parser
-  - [ ] Support variable declarations (`let x = 5`)
-  - [ ] Parse expressions with operator precedence
+- [🔄] **Parser Implementation**
+  - [✅] Build recursive descent parser
+  - [✅] Support variable declarations (`x = 5`)
+  - [ ] Parse expressions with operator precedence (`2 + 3 * 4`)
   - [ ] Add support for function definitions
 
 - [ ] **Expression Evaluation**
@@ -84,12 +107,13 @@ The interpreter starts with a simple prompt (`@> `) where you can:
   - [ ] String concatenation and comparison
 
 ### Variable System Enhancements
-- [ ] **Symbol Table**
-  - [ ] Variable lookup and resolution
+- [🔄] **Symbol Table**
+  - [✅] Variable lookup and resolution
+  - [ ] Scope management (global, local, block scope)
 
-- [ ] **Type System**
+- [🔄] **Type System**
+  - [✅] Integer type support
   - [ ] Boolean type with `true`/`false` literals
-  - [ ] Arrays/lists with indexing
   - [ ] Type checking and conversion
 
 ### Control Flow
@@ -109,34 +133,19 @@ The interpreter starts with a simple prompt (`@> `) where you can:
   - [ ] Built-in functions (print, input, etc.)
 
 ### Advanced Features
-- [ ] **Error Handling**
+- [🔄] **Error Handling**
+  - [✅] Basic parsing error detection
   - [ ] Comprehensive error reporting with line numbers
   - [ ] Runtime error recovery
-  - [ ] Stack trace on errors
-
-- [ ] **Standard Library**
-  - [ ] File I/O operations
-
-### Developer Experience
-- [ ] **Debugging Support**
-  - [ ] Step-through debugger
-  - [ ] Variable inspection
-  - [ ] Breakpoints
-
-- [ ] **Documentation**
-  - [ ] Language specification
-  - [ ] API documentation
-  - [ ] Tutorial and examples
 
 ### REPL Improvements
-- [ ] **Enhanced Interface**
+- [🔄] **Enhanced Interface**
+  - [✅] Basic command processing
   - [ ] Command history (up/down arrows)
-  - [ ] Syntax highlighting
 
 - [ ] **REPL Commands**
   - [ ] `:help` - Show available commands
   - [ ] `:vars` - List all variables  
   - [ ] `:clear` - Clear all variables
-  - [ ] `:load <file>` - Load and execute file
-  - [ ] `:save <file>` - Save session to file
 
+**Legend:** ✅ Complete | 🔄 Partially Complete | [ ] Not Started
