@@ -3,6 +3,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void init_symbol_table(void) {
+    
+    variable_count = 0;
+
+    for(int i = 0; i < 100; i++)
+        symbol_table[i] = NULL;
+
+}
+
 Variable* make_Variable(Type type, Identifier* ident, void* value) {
     Variable* p;
     int16 size;
@@ -35,6 +44,8 @@ void mainloop(bool *run_ptr){
     int8* cmd;
     Lexer lexer;
     Token token;
+    Parser* parser;
+    AST* result;
 
     prompt();
     cmd = readline();
@@ -44,21 +55,21 @@ void mainloop(bool *run_ptr){
         } else {
             printf("Tokenizing: '%s'\n", $c cmd);
             init_lexer(&lexer, cmd);
+            parser = create_parser(&lexer);
+            result = parse_assignment(parser);
             
-            do {
-                token = next_token(&lexer);
-                print_token(&token);
-                
-                if(token.type == TOKEN_KEYWORD && 
-                   !strcmp($c token.value, "exit")) {
-                    *run_ptr = false;
-                }
-                
-                free_token(&token);
-            } while(token.type != TOKEN_EOF && *run_ptr);
+            if(result)
+                printf("Parsed!");
+            else
+                printf("Error in Parsing!");
         }
         
         free(cmd);
+        if(parser){
+            free(parser->tokens);
+            free(parser);
+        }
+        cleanup_AST(result);
     }
     return;
 }
@@ -66,7 +77,7 @@ void mainloop(bool *run_ptr){
 int main(int argc, char* argv[]){
     bool run;
     bool *run_ptr;
-
+    init_symbol_table();
     run = true;
     run_ptr = &run;
 
