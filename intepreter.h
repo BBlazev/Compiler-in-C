@@ -29,8 +29,16 @@ typedef struct Variable{
 
 void mainloop(bool*);
 void prompt();
+void init_symbol_table(void);
+
+
 
 Variable* make_Variable(Type, Identifier*, void*);
+Variable* symbol_table[100];
+int variable_count;
+Variable* find_variable(char* name);
+void store_variable(Variable* variable);
+void evaluate_AST(AST* node);
 
 
 #define newstr(p,n,v) do{\

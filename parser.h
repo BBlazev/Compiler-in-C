@@ -93,3 +93,17 @@ AST* parse_assignment(Parser* parser){
 
 
 }
+AST* parse_variable_lookup(Parser* parser){
+
+    Token token = current_token(parser);
+    Identifier* identifier = token.value;
+    if(!identifier)
+        return NULL;
+
+
+    match(parser, TOKEN_IDENTIFIER);
+
+    AST* node = create_variable_node(identifier);
+    
+    return node;
+}
